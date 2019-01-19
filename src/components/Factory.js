@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import io from "socket.io-client";
 
 class Factory extends Component {
@@ -79,22 +80,30 @@ class Factory extends Component {
 
     render() {
         return (
-            <div>
-            FACTORY
-            <div>
-                <input type="text" name="name" value={this.state.name} onChange={this.handleChange} />
-                <input type="text" name="childCount" disabled value={this.state.childCount} onChange={this.handleChange} />
-                <input type="text" name="randomLowerBound" value={this.state.randomLowerBound} onChange={this.handleChange} />
-                <input type="text" name="randomUpperBound" value={this.state.randomUpperBound} onChange={this.handleChange} />
+            <div class="factory-container">
+                <div class="factory-line"><hr/></div>
+                <div class="factory-content">
+                    <div>
+                    <input type="text" name="name" value={this.state.name} onChange={this.handleChange} />
+                    <input type="text" name="childCount" disabled value={this.state.childCount} onChange={this.handleChange} />
+                    <input type="text" name="randomLowerBound" value={this.state.randomLowerBound} onChange={this.handleChange} />
+                    <input type="text" name="randomUpperBound" value={this.state.randomUpperBound} onChange={this.handleChange} />
+                    </div>
+                <FontAwesomeIcon title="Update" onClick={this.updateFactory.bind(this, this.state._id)} className="fa-button" icon="edit" />
+                <FontAwesomeIcon title="Re-generate" onClick={this.generateChildren.bind(this, this.state._id)} className="fa-button" icon="sync" />
+                <FontAwesomeIcon title="Remove" onClick={this.deleteFactory.bind(this, this.state._id)} className="fa-button" icon="ban" />
+                </div>
+                <div class="factory-line"><hr/></div>
+                <div class="factory-children">
+                    {this.state.children.map(c => { return (
+                        <div class="child-container">
+                            <div class="child-line"><hr/></div>
+                            <div class="child">{c}</div>
+                        </div>
+                    )})
+                    }
+                </div>
             </div>
-            {this.state.children.map(c => { return (
-                <div>{c}</div>
-            )})
-            }
-            <button onClick={this.updateFactory.bind(this, this.state._id)}>Update</button>
-            <button onClick={this.generateChildren.bind(this, this.state._id)}>Generate</button>
-            <button onClick={this.deleteFactory.bind(this, this.state._id)}>Delete</button>
-        </div>
         )
     }
 }

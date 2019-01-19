@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import io from "socket.io-client";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class NewFactory extends Component {
     constructor(props) {
@@ -45,7 +46,7 @@ class NewFactory extends Component {
     render() {
         return (
             <div>
-                        <label>
+        <label>
           Name:
           <input type="text" name="name" value={this.state.name} onChange={this.handleChange} />
         </label>
@@ -61,7 +62,7 @@ class NewFactory extends Component {
           Upper Bound:
           <input type="text" name="upperBound" value={this.state.upperBound} onChange={this.handleChange} />
         </label>
-        <button onClick={this.createFactory} class="btn btn-danger">Create</button>
+        <FontAwesomeIcon title="Add Factory" onClick={this.createFactory} className="fa-button" icon="plus" />
             </div>
         )
     }
