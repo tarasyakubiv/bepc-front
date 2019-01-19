@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Factory from "./Factory";
+import NewFactory from "./NewFactory";
 import axios from 'axios';
 
 class Tree extends Component {
@@ -7,9 +9,14 @@ class Tree extends Component {
         this.state = {
             factories: []
         }
+        this.refreshTree = this.refreshTree.bind(this)
     }
 
     componentDidMount() {
+        this.refreshTree();
+    }
+
+    refreshTree() {
         axios.get("http://localhost:8080/api/factories")
             .then(res => {
                 const factories = res.data.data
@@ -20,15 +27,9 @@ class Tree extends Component {
     render() {
         return (
             <div>
+            <NewFactory refresh={this.refreshTree} />
             {this.state.factories.map(i => { return (
-                <div>
-                    FACTORY
-                    <div>{i.name}   {i.childCount}   {i.randomLowerBound}    {i.randomUpperBound}</div>
-                    {i.children.map(c => { return (
-                        <div>{c}</div>
-                    )})
-                    }
-                </div>
+                <Factory factory={i} refresh={this.refreshTree} />
             )}
             )}
         </div>
