@@ -45,25 +45,27 @@ class NewFactory extends Component {
 
     render() {
         return (
-            <div>
-        <label>
-          Name:
-          <input type="text" name="name" value={this.state.name} onChange={this.handleChange} />
-        </label>
-        <label>
-          Child Count:
-          <input type="text" name="childCount" value={this.state.childCount} onChange={this.handleChange} />
-        </label>
-        <label>
-          Lower Bound:
-          <input type="text" name="lowerBound" value={this.state.lowerBound} onChange={this.handleChange} />
-        </label>
-        <label>
-          Upper Bound:
-          <input type="text" name="upperBound" value={this.state.upperBound} onChange={this.handleChange} />
-        </label>
-        <FontAwesomeIcon title="Add Factory" onClick={this.createFactory} className="fa-button" icon="plus" />
-            </div>
+                <div class="factory-content new-factory sticky">
+                    <div class="factory-content-section">
+                        <input type="text" title="Factory name" placeholder="Name" name="name" class="factory-name" value={this.state.name} onChange={this.handleChange} />
+                        <FontAwesomeIcon title="Add Factory" onClick={this.createFactory} className="fa-button" icon="plus" />
+                    </div>
+                    <div class="factory-content-section">
+                        <div class="factory-content-bottom">
+                            <div>Children</div>
+                            <div>
+                                <input type="text" title="Child notes count" class="factory-count" placeholder="Count" name="childCount" value={this.state.childCount} onChange={this.handleChange} />
+                            </div>
+                        </div>
+                        <div class="factory-content-bottom">
+                            <div>Bounds</div>
+                            <div>
+                                <input type="text" placeholder="Upper" title="Upper random number bound" name="upperBound" class="factory-bound" value={this.state.upperBound} onChange={this.handleChange} />
+                            </div>
+                            <div><input type="text" placeholder="Lower" title="Lower random number bound" name="lowerBound" class="factory-bound" value={this.state.lowerBound} onChange={this.handleChange} /></div>
+                        </div>
+                    </div>
+                </div>
         )
     }
 }

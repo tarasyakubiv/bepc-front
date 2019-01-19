@@ -22,7 +22,6 @@ class Factory extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        // reset page if items array has changed
         if (this.props.factory !== prevProps.factory) {
             this.setState({
                 _id: this.props.factory._id,
@@ -83,15 +82,24 @@ class Factory extends Component {
             <div class="factory-container">
                 <div class="factory-line"><hr/></div>
                 <div class="factory-content">
-                    <div>
-                    <input type="text" name="name" value={this.state.name} onChange={this.handleChange} />
-                    <input type="text" name="childCount" disabled value={this.state.childCount} onChange={this.handleChange} />
-                    <input type="text" name="randomLowerBound" value={this.state.randomLowerBound} onChange={this.handleChange} />
-                    <input type="text" name="randomUpperBound" value={this.state.randomUpperBound} onChange={this.handleChange} />
+                    <div class="factory-content-section">
+                        <FontAwesomeIcon title="Save changes" onClick={this.updateFactory.bind(this, this.state._id)} 
+                                    className="fa-button" icon="edit" />
+                        <input type="text" title="Factory name" placeholder="Name" name="name" class="factory-name" value={this.state.name} onChange={this.handleChange} />
+                        <FontAwesomeIcon title="Remove" onClick={this.deleteFactory.bind(this, this.state._id)} className="fa-button" icon="ban" />
                     </div>
-                <FontAwesomeIcon title="Update" onClick={this.updateFactory.bind(this, this.state._id)} className="fa-button" icon="edit" />
-                <FontAwesomeIcon title="Re-generate" onClick={this.generateChildren.bind(this, this.state._id)} className="fa-button" icon="sync" />
-                <FontAwesomeIcon title="Remove" onClick={this.deleteFactory.bind(this, this.state._id)} className="fa-button" icon="ban" />
+                    <div class="factory-content-section">
+                        <div class="factory-content-bottom">
+                            <div>Children</div>
+                            <div title="Child nodes count, locked">{this.state.childCount}</div>
+                            <div><FontAwesomeIcon title="Re-generate" onClick={this.generateChildren.bind(this, this.state._id)} className="fa-button" icon="sync" /></div>
+                        </div>
+                        <div class="factory-content-bottom">
+                            <div>Bounds</div>
+                            <div><input type="text" placeholder="Upper random bound" title="Upper random number bound" name="randomUpperBound" class="factory-bound" value={this.state.randomUpperBound} onChange={this.handleChange} /></div>
+                            <div><input type="text" placeholder="Lower random bound" title="Lower random number bound" name="randomLowerBound" class="factory-bound" value={this.state.randomLowerBound} onChange={this.handleChange} /></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="factory-line"><hr/></div>
                 <div class="factory-children">

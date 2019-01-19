@@ -8,13 +8,20 @@ class Tree extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            factories: []
+            factories: [],
+            newFactory: false
         }
         this.refreshTree = this.refreshTree.bind(this)
+        this.toggleNewFactory = this.toggleNewFactory.bind(this)
     }
 
     componentDidMount() {
         this.refreshTree();
+    }
+
+    toggleNewFactory() {
+        let newFactory = !this.state.newFactory;
+        this.setState({newFactory});
     }
 
     refreshTree() {
@@ -27,13 +34,16 @@ class Tree extends Component {
 
     render() {
         return (
-            <div>
+            <div class="base">
                 <div class="root-content">
-                    <FontAwesomeIcon title="New Factory" className="root-button" icon="industry" />   
+                    <FontAwesomeIcon title="New Factory" onClick={this.toggleNewFactory} className="root-button" icon="industry" />   
                     <div class="root-text">ROOT</div>
                 </div>
                 <div class="tree-content">
-                <NewFactory refresh={this.refreshTree} />   
+                {(()=>{
+                if (this.state.newFactory)
+                    return <NewFactory refresh={this.refreshTree} /> 
+                })()}   
                 {this.state.factories.map(i => { return (
                     <Factory factory={i} refresh={this.refreshTree} />
                     )}
