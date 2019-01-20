@@ -15,7 +15,7 @@ class Factory extends Component {
             children: this.props.factory.children
         }
         this.handleChange = this.handleChange.bind(this);
-        this.socket = io('localhost:8080');
+        this.socket = io(process.env.REACT_APP_SOCKET_HOST);
         this.socket.on('REFRESH', function(){
             props.refresh();
         });
@@ -42,7 +42,7 @@ class Factory extends Component {
     }
 
     deleteFactory(id) {
-        axios.delete("http://localhost:8080/api/factories/"+id)
+        axios.delete(process.env.REACT_APP_API_HOST + "/" + id)
             .then(res => {
                 this.socket.emit('NEW_CHANGE', {
                     message: "Delete Factory"
@@ -58,7 +58,7 @@ class Factory extends Component {
             randomLowerBound: Number(this.state.randomLowerBound),
             randomUpperBound: Number(this.state.randomUpperBound)
         }
-        axios.patch("http://localhost:8080/api/factories/"+id, factory)
+        axios.patch(process.env.REACT_APP_API_HOST + "/"+id, factory)
             .then(res => {
                 this.socket.emit('NEW_CHANGE', {
                     message: "Update Factory"
@@ -68,7 +68,7 @@ class Factory extends Component {
     }
 
     generateChildren(id) {
-        axios.put("http://localhost:8080/api/factories/"+id)
+        axios.put(process.env.REACT_APP_API_HOST + "/"+ id)
             .then(res => {
                 this.socket.emit('NEW_CHANGE', {
                     message: "Factory Children Generated"

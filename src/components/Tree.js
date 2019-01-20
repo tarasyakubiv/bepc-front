@@ -25,7 +25,7 @@ class Tree extends Component {
     }
 
     refreshTree() {
-        axios.get("http://localhost:8080/api/factories")
+        axios.get(process.env.REACT_APP_API_HOST)
             .then(res => {
                 const factories = res.data.data
                 this.setState({factories});

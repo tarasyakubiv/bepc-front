@@ -14,7 +14,7 @@ class NewFactory extends Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.createFactory = this.createFactory.bind(this);
-        this.socket = io('localhost:8080');
+        this.socket = io(process.env.REACT_APP_SOCKET_HOST);
         this.socket.on('REFRESH', function(){
             props.refresh();
         });
@@ -34,7 +34,7 @@ class NewFactory extends Component {
             randomLowerBound: Number(this.state.lowerBound),
             randomUpperBound: Number(this.state.upperBound)
         }
-        axios.post("http://localhost:8080/api/factories", factory)
+        axios.post(process.env.REACT_APP_API_HOST, factory)
             .then(res => {
                 this.socket.emit('NEW_CHANGE', {
                     message: "New Factory"
