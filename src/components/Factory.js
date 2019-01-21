@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import io from "socket.io-client";
+import {validateEditBounds, validateName} from './validation'
+
 
 class Factory extends Component {
     constructor(props) {
@@ -78,35 +80,40 @@ class Factory extends Component {
     }
 
     render() {
+        const name = validateName(this.state.name);
+        const bounds = validateEditBounds(this.state.randomLowerBound, this.state.randomUpperBound);
         return (
-            <div class="factory-container">
-                <div class="factory-line"><hr/></div>
-                <div class="factory-content">
-                    <div class="factory-content-section">
+            <div className="factory-container">
+                <div className="factory-line"><hr/></div>
+                <div className="factory-content">
+                    <div className="factory-content-section">
                         <FontAwesomeIcon title="Save changes" onClick={this.updateFactory.bind(this, this.state._id)} 
                                     className="fa-button" icon="edit" />
-                        <input type="text" title="Factory name" placeholder="Name" name="name" class="factory-name" value={this.state.name} onChange={this.handleChange} />
+                        <input type="text" title="Factory name" placeholder="Name" name="name" 
+                        className={name ? "factory-name" : "factory-name error"} value={this.state.name} onChange={this.handleChange} />
                         <FontAwesomeIcon title="Remove" onClick={this.deleteFactory.bind(this, this.state._id)} className="fa-button" icon="ban" />
                     </div>
-                    <div class="factory-content-section">
-                        <div class="factory-content-bottom">
+                    <div className="factory-content-section">
+                        <div className="factory-content-bottom">
                             <div>Children</div>
                             <div title="Child nodes count, locked">{this.state.childCount}</div>
                             <div><FontAwesomeIcon title="Re-generate" onClick={this.generateChildren.bind(this, this.state._id)} className="fa-button" icon="sync" /></div>
                         </div>
-                        <div class="factory-content-bottom">
+                        <div className="factory-content-bottom">
                             <div>Bounds</div>
-                            <div><input type="text" placeholder="Upper random bound" title="Upper random number bound" name="randomUpperBound" class="factory-bound" value={this.state.randomUpperBound} onChange={this.handleChange} /></div>
-                            <div><input type="text" placeholder="Lower random bound" title="Lower random number bound" name="randomLowerBound" class="factory-bound" value={this.state.randomLowerBound} onChange={this.handleChange} /></div>
+                            <div><input type="text" placeholder="Upper" title="Upper random number bound" name="randomUpperBound" 
+                                className={bounds.upper ? "factory-bound" : "factory-bound error"} value={this.state.randomUpperBound} onChange={this.handleChange} /></div>
+                            <div><input type="text" placeholder="Lower" title="Lower random number bound" name="randomLowerBound" 
+                                className={bounds.lower ? "factory-bound" : "factory-bound error"} value={this.state.randomLowerBound} onChange={this.handleChange} /></div>
                         </div>
                     </div>
                 </div>
-                <div class="factory-line"><hr/></div>
-                <div class="factory-children">
+                <div className="factory-line"><hr/></div>
+                <div className="factory-children">
                     {this.state.children.map(c => { return (
-                        <div class="child-container">
-                            <div class="child-line"><hr/></div>
-                            <div class="child">{c}</div>
+                        <div className="child-container">
+                            <div className="child-line"><hr/></div>
+                            <div className="child">{c}</div>
                         </div>
                     )})
                     }

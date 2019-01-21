@@ -27,19 +27,19 @@ class Tree extends Component {
     refreshTree() {
         axios.get(process.env.REACT_APP_API_HOST)
             .then(res => {
-                const factories = res.data.data
+                const factories = res.data.root
                 this.setState({factories});
             })
     }
 
     render() {
         return (
-            <div class="base">
-                <div class="root-content">
+            <div className="base">
+                <div className="root-content">
                     <FontAwesomeIcon title="New Factory" onClick={this.toggleNewFactory} className="root-button" icon="industry" />   
-                    <div class="root-text">ROOT</div>
+                    <div className="root-text">ROOT</div>
                 </div>
-                <div class="tree-content">
+                <div className="tree-content">
                 {(()=>{
                 if (this.state.newFactory)
                     return <NewFactory refresh={this.refreshTree} /> 
