@@ -12,7 +12,7 @@ export const validateBounds = (lowerBound, upperBound) => {
     let lower = lowerIsEmpty || !Number.isNaN(lowerBound);
     let upper = upperIsEmpty || !Number.isNaN(upperBound);
     if(upper && lower) 
-        lower = upper = (lowerBound <= upperBound);
+        lower = upper = (Number(lowerBound) <= Number(upperBound));
     return {
         lower,
         upper
@@ -25,7 +25,7 @@ export const validateEditBounds = (lowerBound, upperBound) => {
     let lower = !lowerIsEmpty && !Number.isNaN(lowerBound);
     let upper = !upperIsEmpty && !Number.isNaN(upperBound);
     if(upper && lower) 
-        lower = upper = (lowerBound <= upperBound);
+        lower = upper = (Number(lowerBound) <= Number(upperBound));
     return {
         lower,
         upper
